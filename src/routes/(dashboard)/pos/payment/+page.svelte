@@ -39,7 +39,7 @@
 	$: order = $orderStore.currentOrder;
 	$: orderIdFromQuery = $page.url.searchParams.get('order_id') ?? '';
 	$: orderId = orderIdFromQuery || order?.id || '';
-	$: total = Number(order?.total ?? 0);
+	$: total = Number(order?.total_amount ?? 0);
 	$: amount = amountTouched ? Math.max(0, Number(amountInput) || 0) : total;
 	$: change = method === 'cash' ? amount - total : 0;
 	$: canSubmit = !loading && !paid && !!order && amount >= total && amount > 0;
@@ -52,7 +52,7 @@
 	});
 
 	$: if (order) {
-		if (!amountTouched) amountInput = String(order.total);
+		if (!amountTouched) amountInput = String(order.total_amount);
 	}
 
 	function selectMethod(value: PaymentMethod): void {
@@ -146,9 +146,9 @@
 
 			paid = (res.data ?? { order_id: order.id, amount, method, status: 'completed' }) as Payment;
 
-			// Integrasi: setelah pembayaran sukses, status order menjadi completed
+			// Integrasi: setelah pembayaran sukses, status order menjadi served (selesai)
 			try {
-				await orderStore.updateStatus(order.id, 'completed');
+				await orderStore.updateStatus(order.id, 'served');
 			} catch (statusErr: any) {
 				// Pembayaran sudah sukses; gagal update status tidak menggagalkan alur
 				console.error('Gagal update status order:', statusErr);
@@ -268,11 +268,11 @@
 								{#each order.items as item}
 									<li class="flex items-center justify-between gap-2 text-sm">
 										<span class="text-gray-700">
-											Menu #{item.menu_id}
+											{item.menu_item_name}
 											<span class="text-gray-400"> × {item.quantity}</span>
 										</span>
 										<span class="font-medium text-gray-900">
-											{formatCurrency(Number(item.price) * Number(item.quantity))}
+											{formatCurrency(Number(item.unit_price) * Number(item.quantity))}
 										</span>
 									</li>
 								{/each}

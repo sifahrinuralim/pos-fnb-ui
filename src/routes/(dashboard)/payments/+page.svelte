@@ -114,9 +114,9 @@
 	<title>Daftar Pembayaran — POS F&B</title>
 </svelte:head>
 
-<div class="mx-auto max-w-6xl">
+<div class="space-y-6">
 	<!-- Header -->
-	<div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+	<div class="flex flex-wrap items-center justify-between gap-4">
 		<div class="flex items-center gap-3">
 			<div class="flex items-center justify-center w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600">
 				<Wallet class="w-6 h-6" />
@@ -132,7 +132,7 @@
 	</div>
 
 	<!-- Ringkasan cepat -->
-	<div class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+	<div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
 		<div class="card flex items-center gap-4 !p-4">
 			<div class="flex items-center justify-center w-10 h-10 rounded-xl bg-gray-100 text-gray-600">
 				<Wallet class="w-5 h-5" />
@@ -163,7 +163,7 @@
 	</div>
 
 	<!-- Filter bar -->
-	<div class="card mb-6 !p-4">
+	<div class="card !p-4">
 		<div class="grid grid-cols-1 gap-3 md:grid-cols-12">
 			<div class="relative md:col-span-4">
 				<Search class="pointer-events-none absolute top-1/2 left-3.5 w-4 h-4 -translate-y-1/2 text-gray-400" />
