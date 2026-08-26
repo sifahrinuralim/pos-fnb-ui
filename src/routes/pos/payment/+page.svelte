@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import { createPayment } from '$lib/api/payments';
-    import { ordersStore } from '$lib/stores/orders';
+    import { orderStore } from '$lib/stores/orders';
     import { onMount } from 'svelte';
 
     let method: 'cash' | 'qris' | 'card' = 'cash';
@@ -9,7 +9,7 @@
     let loading = false;
     let error = '';
 
-    $: order = $ordersStore.activeOrder;
+    $: order = $orderStore.currentOrder;
     $: if (order) amount = order.total;
 
     async function handleProcessPayment() {
@@ -26,8 +26,8 @@
             
             if (res.success) {
                 // Update order status to completed
-                ordersStore.updateStatus(order.id, 'completed');
-                goto('/pos/orders');
+                orderStore.updateStatus(order.id, 'completed');
+                goto('/orders');
             }
         } catch (e: any) {
             error = e.message || 'Payment failed';

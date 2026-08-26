@@ -47,7 +47,7 @@
 				<ShoppingCart class="w-4 h-4" />
 				Buka Kasir
 			</a>
-			<a href="/products" class="btn-secondary inline-flex items-center gap-2">
+			<a href="/menu-items" class="btn-secondary inline-flex items-center gap-2">
 				<Package class="w-4 h-4" />
 				Kelola Menu
 			</a>

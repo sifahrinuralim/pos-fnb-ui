@@ -11,16 +11,16 @@ export interface User {
 }
 
 export const createUser = (data: Partial<User> & { password?: string }): Promise<ApiResponse<User>> => 
-    apiPost('/v1/users', data);
+    apiPost('/users', data);
 
 export const listUsers = (skip = 0, limit = 20, is_active?: boolean): Promise<ApiResponse<{ items: User[], total: number }>> => 
-    apiGet('/v1/users', { skip, limit, is_active });
+    apiGet('/users', { skip, limit, is_active });
 
 export const getUser = (id: string): Promise<ApiResponse<User>> => 
-    apiGet(`/v1/users/${id}`);
+    apiGet(`/users/${id}`);
 
 export const updateUser = (id: string, data: Partial<User> & { password?: string }): Promise<ApiResponse<User>> => 
-    apiPatch(`/v1/users/${id}`, data);
+    apiPatch(`/users/${id}`, data);
 
 export const deleteUser = (id: string): Promise<ApiResponse<void>> => 
-    apiDelete(`/v1/users/${id}`);
+    apiDelete(`/users/${id}`);

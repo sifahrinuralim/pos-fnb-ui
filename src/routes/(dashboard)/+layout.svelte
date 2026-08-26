@@ -19,6 +19,7 @@
 		Menu,
 		X,
 		ChevronRight,
+		CreditCard,
 		User
 	} from 'lucide-svelte';
 
@@ -34,20 +35,20 @@
 	const mainNav: NavItem[] = [
 		{ href: '/', label: 'Dashboard', icon: LayoutDashboard },
 		{ href: '/pos', label: 'Kasir (POS)', icon: ShoppingCart },
-		{ href: '/products', label: 'Menu & Produk', icon: UtensilsCrossed },
+		{ href: '/menu-items', label: 'Menu & Produk', icon: UtensilsCrossed },
 		{ href: '/categories', label: 'Kategori', icon: Tag },
-		{ href: '/modifiers', label: 'Modifier', icon: SlidersHorizontal },
 		{ href: '/tables', label: 'Meja', icon: LayoutGrid },
 		{ href: '/orders', label: 'Pesanan', icon: ClipboardList },
-		{ href: '/inventory', label: 'Inventaris', icon: Package },
-		{ href: '/reports', label: 'Laporan', icon: BarChart3 }
-,
+		{ href: '/payments', label: 'Pembayaran', icon: CreditCard },
+		{ href: '/inventory/stocks', label: 'Inventaris', icon: Package },
+		{ href: '/reports/sales-summary', label: 'Laporan', icon: BarChart3 },
 		{ href: '/discounts', label: 'Diskon & Promo', icon: Tag },
 	];
 
 	const settingsNav: NavItem[] = [
 		{ href: '/users', label: 'Pengguna', icon: Users },
-		{ href: '/outlets', label: 'Outlet', icon: Store }
+		{ href: '/settings/store', label: 'Outlet', icon: Store },
+		{ href: '/settings/tax', label: 'Pajak', icon: SlidersHorizontal }
 	];
 
 	$: if ($authStore.loaded && !$authStore.isAuthenticated) {
