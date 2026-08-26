@@ -1,12 +1,30 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { inventoryStore } from '$lib/stores/inventory';
+    import { toggleOutOfStockAvailability } from '$lib/services/inventory';
 
     onMount(() => inventoryStore.loadInventory());
+
+    async function handleToggle() {
+        try {
+            await toggleOutOfStockAvailability();
+            alert('Availability toggled successfully');
+        } catch (e) {
+            alert('Failed to toggle availability');
+        }
+    }
 </script>
 
 <div class="p-6">
-    <h1 class="text-2xl font-bold mb-4">Stock Management</h1>
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">Stock Management</h1>
+        <button 
+            on:click={handleToggle}
+            class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700"
+        >
+            Toggle Global Availability
+        </button>
+    </div>
     <table class="w-full border-collapse">
         <thead>
             <tr class="bg-gray-100">

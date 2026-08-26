@@ -1,4 +1,4 @@
-import { apiGet, apiPost, apiPatch } from '$lib/services/api';
+import { apiGet, apiPost, apiPatch, apiPut } from '$lib/services/api';
 
 export interface Ingredient {
     id: string;
@@ -18,6 +18,18 @@ export interface InventoryItem {
     is_low_stock: boolean;
 }
 
+export interface RecipeIngredient {
+    ingredient_id: string;
+    ingredient_name: string;
+    quantity: number;
+    unit: string;
+}
+
+export interface AvailabilityCheckResponse {
+    is_available: boolean;
+    missing_ingredients: RecipeIngredient[];
+}
+
 export const createIngredient = (data: any) => apiPost('/inventory/ingredients', data);
 export const listIngredients = (skip: number = 0, limit: number = 50) => apiGet<Ingredient[]>('/inventory/ingredients', { skip, limit });
 export const getIngredient = (id: string) => apiGet<Ingredient>(`/inventory/ingredients/${id}`);
@@ -28,3 +40,10 @@ export const listInventory = (skip: number = 0, limit: number = 50) => apiGet<In
 export const getInventory = (id: string) => apiGet<InventoryItem>(`/inventory/stocks/${id}`);
 export const updateInventory = (id: string, data: any) => apiPatch(`/inventory/stocks/${id}`, data);
 export const listLowStock = () => apiGet<InventoryItem[]>('/inventory/stocks/low');
+
+// Recipe & Availability
+export const listRecipe = (menuItemId: string) => apiGet<RecipeIngredient[]>(`/inventory/recipes/${menuItemId}`);
+export const setRecipe = (menuItemId: string, ingredients: { ingredient_id: string, quantity: number }[]) => apiPut(`/inventory/recipes/${menuItemId}`, { ingredients });
+export const checkAvailability = (menuItemId: string, quantity: number) => apiGet<AvailabilityCheckResponse>(`/inventory/recipes/${menuItemId}/availability`, { quantity });
+export const toggleOutOfStockAvailability = () => apiPost('/inventory/stocks/toggle-availability');
+
