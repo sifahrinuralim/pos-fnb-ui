@@ -1,6 +1,6 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
 import { get } from 'svelte/store';
-import { authStore, type AuthUser } from '$lib/stores/auth';
+import { authStore } from '$lib/stores/auth';
 
 // ──────────────────────────────────────────────
 // Types
@@ -108,11 +108,7 @@ api.interceptors.response.use(
 				if (responseData.success && responseData.data) {
 					const { access_token, refresh_token } = responseData.data;
 
-					authStore.update((state) => ({
-						...state,
-						token: access_token,
-						refreshToken: refresh_token
-					}));
+					authStore.updateTokens(access_token, refresh_token);
 
 					processQueue(null, access_token);
 

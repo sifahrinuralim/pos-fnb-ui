@@ -1,35 +1,16 @@
 import { writable, derived, get } from 'svelte/store';
 import { browser } from '$app/environment';
-import { apiPost, type ApiResponse } from '$lib/services/api';
+import * as authApi from '$lib/api/auth.api';
+import type { ApiResponse } from '$lib/services/api';
 
 // ──────────────────────────────────────────────
 // Types
 // ──────────────────────────────────────────────
 
-export interface AuthUser {
-	id: number;
-	name: string;
-	email: string;
-	role: string;
-	permissions: string[];
-	outlet_id: number | null;
-	outlet_name: string | null;
-}
-
-interface LoginPayload {
-	email: string;
-	password: string;
-}
-
-interface LoginResponse {
-	user: AuthUser;
-	access_token: string;
-	refresh_token: string;
-	expires_in: number;
-}
+export type { AuthUser } from '$lib/api/auth.api';
 
 export interface AuthState {
-	user: AuthUser | null;
+	user: authApi.AuthUser | null;
 	token: string | null;
 	refreshToken: string | null;
 	isAuthenticated: boolean;
@@ -51,7 +32,7 @@ function loadPersistedAuth(): Partial<AuthState> {
 	const refreshToken = localStorage.getItem(STORAGE_KEY_REFRESH);
 	const userJson = localStorage.getItem(STORAGE_KEY_USER);
 
-	let user: AuthUser | null = null;
+	let user: authApi.AuthUser | null = null;
 	try {
 		user = userJson ? JSON.parse(userJson) : null;
 	} catch {
@@ -98,11 +79,11 @@ function createAuthStore() {
 		subscribe,
 
 		/** Authenticate user with email & password */
-		async login(payload: LoginPayload): Promise<ApiResponse<LoginResponse>> {
+		async login(payload: authApi.LoginRequest): Promise<ApiResponse<authApi.TokenResponse>> {
 			update((s) => ({ ...s, loading: true }));
 
 			try {
-				const response = await apiPost<LoginResponse>('/auth/login', payload);
+				const response = await authApi.login(payload);
 
 				if (response.success && response.data) {
 					const { user, access_token, refresh_token } = response.data;
@@ -126,6 +107,28 @@ function createAuthStore() {
 			}
 		},
 
+		/** Fetch current user profile from API (GET /auth/me) */
+		async getMe(): Promise<ApiResponse<authApi.AuthUser>> {
+			update((s) => ({ ...s, loading: true }));
+
+			try {
+				const response = await authApi.getMe();
+
+				if (response.success && response.data) {
+					update((s) => {
+						const newState = { ...s, user: response.data, loading: false };
+						persistAuth(newState);
+						return newState;
+					});
+				}
+
+				return response;
+			} catch (error) {
+				update((s) => ({ ...s, loading: false }));
+				throw error;
+			}
+		},
+
 		/** Update tokens (used by refresh interceptor) */
 		updateTokens(token: string, refreshToken: string): void {
 			update((s) => {
@@ -136,7 +139,7 @@ function createAuthStore() {
 		},
 
 		/** Update user profile data */
-		setUser(user: AuthUser): void {
+		setUser(user: authApi.AuthUser): void {
 			update((s) => {
 				const newState = { ...s, user };
 				persistAuth(newState);
@@ -144,8 +147,15 @@ function createAuthStore() {
 			});
 		},
 
-		/** Clear all auth state and redirect */
-		logout(): void {
+		/** Call logout API then clear all auth state */
+		async logout(): Promise<void> {
+			// Best-effort call to backend to invalidate (stateless but clean)
+			try {
+				await authApi.logout();
+			} catch {
+				// Token may already be expired — proceed with local cleanup anyway
+			}
+
 			const emptyState: AuthState = {
 				user: null,
 				token: null,
