@@ -31,11 +31,20 @@ export type TableUpdate = Partial<TableCreate>;
 // API Functions
 // ──────────────────────────────────────────────
 
-/** GET /api/v1/tables?status= → data: Table[] */
-export async function listTables(status: TableStatus | 'all' = 'all'): Promise<ApiResponse<Table[]>> {
-	const params: Record<string, unknown> = {};
+/** GET /api/v1/tables?status=&skip=&limit= → data: Table[] */
+export async function listTables(
+	status: TableStatus | 'all' = 'all',
+	skip = 0,
+	limit = 100
+): Promise<ApiResponse<Table[]>> {
+	const params: Record<string, unknown> = { skip, limit };
 	if (status && status !== 'all') params.status = status;
 	return apiGet<Table[]>('/tables', params);
+}
+
+/** GET /api/v1/tables/{table_id} */
+export async function getTable(id: string): Promise<ApiResponse<Table>> {
+	return apiGet<Table>(`/tables/${id}`);
 }
 
 /** POST /api/v1/tables */

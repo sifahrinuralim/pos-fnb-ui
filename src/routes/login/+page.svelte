@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { authStore } from '$lib/stores/auth';
 	import { AlertCircle, Loader2, Lock, Mail } from 'lucide-svelte';
@@ -8,8 +9,8 @@
 	let errorMessage = '';
 	let isLoading = false;
 
-	// Redirect if already authenticated
-	if ($authStore.isAuthenticated) {
+	// Redirect if already authenticated (client-only; store is empty during SSR)
+	if (browser && $authStore.isAuthenticated) {
 		goto('/');
 	}
 
