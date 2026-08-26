@@ -15,6 +15,7 @@ export interface AuthState {
 	refreshToken: string | null;
 	isAuthenticated: boolean;
 	loading: boolean;
+	loaded: boolean;
 }
 
 const STORAGE_KEY_TOKEN = 'pos_token';
@@ -40,9 +41,9 @@ function loadPersistedAuth(): Partial<AuthState> {
 	}
 
 	if (token && user) {
-		return { token, refreshToken, user, isAuthenticated: true };
+		return { token, refreshToken, user, isAuthenticated: true, loaded: true };
 	}
-	return {};
+	return { loaded: true };
 }
 
 function persistAuth(state: AuthState): void {
@@ -72,6 +73,7 @@ function createAuthStore() {
 		refreshToken: null,
 		isAuthenticated: false,
 		loading: false,
+		loaded: true,
 		...persisted
 	});
 
