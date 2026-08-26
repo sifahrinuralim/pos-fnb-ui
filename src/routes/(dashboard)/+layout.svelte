@@ -41,6 +41,7 @@
 		{ href: '/orders', label: 'Pesanan', icon: ClipboardList },
 		{ href: '/inventory', label: 'Inventaris', icon: Package },
 		{ href: '/reports', label: 'Laporan', icon: BarChart3 }
+,
 		{ href: '/discounts', label: 'Diskon & Promo', icon: Tag },
 	];
 
@@ -49,9 +50,9 @@
 		{ href: '/outlets', label: 'Outlet', icon: Store }
 	];
 
-	onMount(() => {
-		if (!$authStore.isAuthenticated) goto('/login');
-	});
+	$: if ($authStore.loaded && !$authStore.isAuthenticated) {
+		goto('/login');
+	}
 
 	function isActive(href: string): boolean {
 		if (href === '/') return $page.url.pathname === '/';
