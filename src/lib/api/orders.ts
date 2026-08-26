@@ -4,7 +4,7 @@ export interface Order {
     id: string;
     table_number: number;
     order_type: 'dine_in' | 'takeaway' | 'gofood' | 'grabfood';
-    status: 'pending' | 'in_kitchen' | 'ready' | 'served' | 'cancelled';
+    status: 'pending' | 'in_kitchen' | 'ready' | 'served' | 'completed' | 'cancelled';
     items: { menu_id: string; quantity: number; price: number }[];
     total: number;
     created_at: string;

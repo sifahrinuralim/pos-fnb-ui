@@ -46,7 +46,7 @@ export function getBestSelling(limit, startDate, endDate) {
  * @returns {Promise<import('$lib/services/api').ApiResponse<object>>}
  */
 export function getShiftSettlement(userId, date) {
-	const params = { date };
+	const params = /** @type {Record<string, string | null>} */ ({ date });
 	if (userId) {
 		params.user_id = userId;
 	}

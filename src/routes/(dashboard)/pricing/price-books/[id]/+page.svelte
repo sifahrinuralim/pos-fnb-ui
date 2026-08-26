@@ -3,7 +3,7 @@
     import { onMount } from 'svelte';
     import { getPriceBook, listProductPrices, createProductPrice, type PriceBook, type ProductPrice } from '$lib/api/pricing.api';
 
-    const id = parseInt($page.params.id);
+    const id = parseInt($page.params.id ?? '');
     let priceBook: PriceBook | null = null;
     let productPrices: ProductPrice[] = [];
     
