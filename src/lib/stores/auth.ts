@@ -95,7 +95,8 @@ function createAuthStore() {
 						token: access_token,
 						refreshToken: refresh_token,
 						isAuthenticated: true,
-						loading: false
+						loading: false,
+						loaded: true
 					};
 
 					set(newState);
@@ -163,7 +164,8 @@ function createAuthStore() {
 				token: null,
 				refreshToken: null,
 				isAuthenticated: false,
-				loading: false
+				loading: false,
+				loaded: true
 			};
 			set(emptyState);
 			persistAuth(emptyState);

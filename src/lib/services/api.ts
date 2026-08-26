@@ -50,6 +50,19 @@ api.interceptors.request.use(
 );
 
 // ──────────────────────────────────────────────
+// Auth endpoints — a 401 on these means invalid
+// credentials / an expired refresh token, NOT an
+// expired session. They must never trigger the
+// refresh flow or a forced logout redirect.
+// ──────────────────────────────────────────────
+
+function isAuthEndpoint(url?: string): boolean {
+	if (!url) return false;
+	const path = url.replace(/^https?:\/\/[^/]+/i, '');
+	return path === '/auth/login' || path === '/auth/refresh';
+}
+
+// ──────────────────────────────────────────────
 // Response Interceptor — Auto-Refresh on 401
 // ──────────────────────────────────────────────
 
@@ -75,8 +88,9 @@ api.interceptors.response.use(
 	async (error: AxiosError) => {
 		const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
-		// Handle 401 — attempt token refresh
-		if (error.response?.status === 401 && !originalRequest._retry) {
+		// Handle 401 — attempt token refresh (skip auth endpoints where
+		// a 401 simply means invalid credentials / expired refresh token)
+		if (error.response?.status === 401 && !originalRequest._retry && !isAuthEndpoint(originalRequest.url)) {
 			if (isRefreshing) {
 				return new Promise((resolve, reject) => {
 					failedQueue.push({ resolve, reject });
