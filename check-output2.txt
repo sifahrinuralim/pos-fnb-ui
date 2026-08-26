@@ -1,0 +1,120 @@
+
+====================================
+Loading svelte-check in workspace: c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui
+Getting Svelte diagnostics...
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\lib\stores\cart.ts[39m:148:12
+[31mError[39m: Property 'update' does not exist on type '{ subscribe: (this: void, run: Subscriber<CartState>, invalidate?: Invalidator<CartState> | undefined) => Unsubscriber; ... 4 more ...; decrementQuantity(itemId: number): void; }'. 
+[36mexport function setCartTableNumber(tableNumber: string | null): void {
+	cartStore.[35mupdate[36m((s) => {
+		s.tableNumber = tableNumber;
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\lib\stores\cart.ts[39m:148:20
+[31mError[39m: Parameter 's' implicitly has an 'any' type. 
+[36mexport function setCartTableNumber(tableNumber: string | null): void {
+	cartStore.update(([35ms[36m) => {
+		s.tableNumber = tableNumber;
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\lib\stores\cart.ts[39m:156:12
+[31mError[39m: Property 'update' does not exist on type '{ subscribe: (this: void, run: Subscriber<CartState>, invalidate?: Invalidator<CartState> | undefined) => Unsubscriber; ... 4 more ...; decrementQuantity(itemId: number): void; }'. 
+[36mexport function setCartOrderType(orderType: CartState['orderType']): void {
+	cartStore.[35mupdate[36m((s) => {
+		s.orderType = orderType;
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\lib\stores\cart.ts[39m:156:20
+[31mError[39m: Parameter 's' implicitly has an 'any' type. 
+[36mexport function setCartOrderType(orderType: CartState['orderType']): void {
+	cartStore.update(([35ms[36m) => {
+		s.orderType = orderType;
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\lib\stores\cart.ts[39m:164:12
+[31mError[39m: Property 'update' does not exist on type '{ subscribe: (this: void, run: Subscriber<CartState>, invalidate?: Invalidator<CartState> | undefined) => Unsubscriber; ... 4 more ...; decrementQuantity(itemId: number): void; }'. 
+[36mexport function setCartCustomerInfo(name: string, phone: string): void {
+	cartStore.[35mupdate[36m((s) => {
+		s.customerName = name;
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\lib\stores\cart.ts[39m:164:20
+[31mError[39m: Parameter 's' implicitly has an 'any' type. 
+[36mexport function setCartCustomerInfo(name: string, phone: string): void {
+	cartStore.update(([35ms[36m) => {
+		s.customerName = name;
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\lib\stores\cart.ts[39m:173:12
+[31mError[39m: Property 'update' does not exist on type '{ subscribe: (this: void, run: Subscriber<CartState>, invalidate?: Invalidator<CartState> | undefined) => Unsubscriber; ... 4 more ...; decrementQuantity(itemId: number): void; }'. 
+[36mexport function setCartDiscountPercent(percent: number): void {
+	cartStore.[35mupdate[36m((s) => {
+		s.discountPercent = Math.max(0, Math.min(100, percent));
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\lib\stores\cart.ts[39m:173:20
+[31mError[39m: Parameter 's' implicitly has an 'any' type. 
+[36mexport function setCartDiscountPercent(percent: number): void {
+	cartStore.update(([35ms[36m) => {
+		s.discountPercent = Math.max(0, Math.min(100, percent));
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\lib\stores\cart.ts[39m:181:12
+[31mError[39m: Property 'update' does not exist on type '{ subscribe: (this: void, run: Subscriber<CartState>, invalidate?: Invalidator<CartState> | undefined) => Unsubscriber; ... 4 more ...; decrementQuantity(itemId: number): void; }'. 
+[36mexport function setCartDiscountAmount(amount: number): void {
+	cartStore.[35mupdate[36m((s) => {
+		s.discountAmount = Math.max(0, amount);
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\lib\stores\cart.ts[39m:181:20
+[31mError[39m: Parameter 's' implicitly has an 'any' type. 
+[36mexport function setCartDiscountAmount(amount: number): void {
+	cartStore.update(([35ms[36m) => {
+		s.discountAmount = Math.max(0, amount);
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\lib\stores\cart.ts[39m:189:12
+[31mError[39m: Property 'update' does not exist on type '{ subscribe: (this: void, run: Subscriber<CartState>, invalidate?: Invalidator<CartState> | undefined) => Unsubscriber; ... 4 more ...; decrementQuantity(itemId: number): void; }'. 
+[36mexport function setCartNotes(notes: string): void {
+	cartStore.[35mupdate[36m((s) => {
+		s.notes = notes;
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\lib\stores\cart.ts[39m:189:20
+[31mError[39m: Parameter 's' implicitly has an 'any' type. 
+[36mexport function setCartNotes(notes: string): void {
+	cartStore.update(([35ms[36m) => {
+		s.notes = notes;
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\lib\stores\cart.ts[39m:197:12
+[31mError[39m: Property 'set' does not exist on type '{ subscribe: (this: void, run: Subscriber<CartState>, invalidate?: Invalidator<CartState> | undefined) => Unsubscriber; ... 4 more ...; decrementQuantity(itemId: number): void; }'. 
+[36mexport function clearCart(): void {
+	cartStore.[35mset[36m({
+		items: [],
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\lib\components\category\CategoryModal.svelte[39m:70:2
+[33mWarn[39m: A11y: <div> with click handler must have an ARIA role (svelte)
+[36m	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	[35m<div class="fixed inset-0 z-40 bg-black/50 transition-opacity" on:click={handleClose} />[36m
+
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\routes\(dashboard)\categories\+page.svelte[39m:202:53
+[31mError[39m: Unexpected token (svelte)
+[36m					value={limit}
+					on:change={(e) => changeLimit(Number((e.target [35m[36mas HTMLSelectElement).value))}
+					class="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\routes\(dashboard)\categories\+page.svelte[39m:202:53
+[31mError[39m: Unexpected token (ts)
+[36m					value={limit}
+					on:change={(e) => changeLimit(Number((e.target [35m[36mas HTMLSelectElement).value))}
+					class="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+[39m
+
+====================================
+[31msvelte-check found 15 errors and 1 warning in 3 files
+[39m

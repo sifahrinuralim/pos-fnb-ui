@@ -1,0 +1,73 @@
+
+> pos-fnb-ui@0.0.1 build
+> vite build
+
+[36mvite v5.4.21 [32mbuilding SSR bundle for production...[36m[39m
+transforming...
+node_modules/@sveltejs/kit/src/runtime/client/client.js (6:23): "untrack" is not exported by "node_modules/svelte/src/runtime/ssr.js", imported by "node_modules/@sveltejs/kit/src/runtime/client/client.js".
+node_modules/@sveltejs/kit/src/runtime/client/client.js (389:26): "fork" is not exported by "node_modules/svelte/src/runtime/ssr.js", imported by "node_modules/@sveltejs/kit/src/runtime/client/client.js".
+node_modules/@sveltejs/kit/src/runtime/client/client.js (1310:30): "settled" is not exported by "node_modules/svelte/src/runtime/ssr.js", imported by "node_modules/@sveltejs/kit/src/runtime/client/client.js".
+[32m✓[39m 1444 modules transformed.
+rendering chunks...
+[36mvite v5.4.21 [32mbuilding for production...[36m[39m
+transforming...
+node_modules/@sveltejs/kit/src/runtime/client/client.js (5:23): "untrack" is not exported by "node_modules/svelte/src/runtime/index.js", imported by "node_modules/@sveltejs/kit/src/runtime/client/client.js".
+node_modules/@sveltejs/kit/src/runtime/client/client.js (388:26): "fork" is not exported by "node_modules/svelte/src/runtime/index.js", imported by "node_modules/@sveltejs/kit/src/runtime/client/client.js".
+node_modules/@sveltejs/kit/src/runtime/client/client.js (1309:30): "settled" is not exported by "node_modules/svelte/src/runtime/index.js", imported by "node_modules/@sveltejs/kit/src/runtime/client/client.js".
+[32m✓[39m 1474 modules transformed.
+rendering chunks...
+computing gzip size...
+[2m.svelte-kit/output/client/[22m[32m_app/version.json                       [39m[1m[2m 0.03 kB[22m[1m[22m[2m │ gzip:  0.05 kB[22m
+[2m.svelte-kit/output/client/[22m[32m.vite/manifest.json                     [39m[1m[2m 4.94 kB[22m[1m[22m[2m │ gzip:  0.76 kB[22m
+[2m.svelte-kit/output/client/[22m[35m_app/immutable/assets/0.DcSmAFXb.css    [39m[1m[2m25.36 kB[22m[1m[22m[2m │ gzip:  4.76 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/entry/start.DxcLpaYI.js  [39m[1m[2m 0.08 kB[22m[1m[22m[2m │ gzip:  0.09 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/Dey66rl4.js       [39m[1m[2m 0.23 kB[22m[1m[22m[2m │ gzip:  0.16 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/nodes/0.dJHgfWx7.js      [39m[1m[2m 0.75 kB[22m[1m[22m[2m │ gzip:  0.50 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/nodes/1.Cz8m_MdN.js      [39m[1m[2m 0.81 kB[22m[1m[22m[2m │ gzip:  0.50 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/CUjexLYr.js       [39m[1m[2m 0.92 kB[22m[1m[22m[2m │ gzip:  0.57 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/DneEec-X.js       [39m[1m[2m 1.17 kB[22m[1m[22m[2m │ gzip:  0.69 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/CAaQKDiH.js       [39m[1m[2m 1.26 kB[22m[1m[22m[2m │ gzip:  0.72 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/wbPk3Yxo.js       [39m[1m[2m 1.37 kB[22m[1m[22m[2m │ gzip:  0.66 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/J91wYCrF.js       [39m[1m[2m 2.28 kB[22m[1m[22m[2m │ gzip:  1.19 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/CYbfn62b.js       [39m[1m[2m 4.62 kB[22m[1m[22m[2m │ gzip:  1.13 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/nodes/3.CgTPXgWY.js      [39m[1m[2m 5.10 kB[22m[1m[22m[2m │ gzip:  2.25 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/zezmfE9k.js       [39m[1m[2m 6.81 kB[22m[1m[22m[2m │ gzip:  2.75 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/entry/app.lN_yW6Xv.js    [39m[1m[2m 9.06 kB[22m[1m[22m[2m │ gzip:  3.09 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/nodes/5.CJjmIMeB.js      [39m[1m[2m10.13 kB[22m[1m[22m[2m │ gzip:  3.75 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/nodes/2.nAa5yhgM.js      [39m[1m[2m24.95 kB[22m[1m[22m[2m │ gzip:  6.26 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/BEiY0km0.js       [39m[1m[2m28.21 kB[22m[1m[22m[2m │ gzip: 10.84 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/nodes/4.BP1XcMeI.js      [39m[1m[2m38.27 kB[22m[1m[22m[2m │ gzip: 12.07 kB[22m
+[2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/DwGPosGy.js       [39m[1m[2m59.36 kB[22m[1m[22m[2m │ gzip: 22.67 kB[22m
+[32m✓ built in 16.11s[39m
+[2m.svelte-kit/output/server/[22m[32m.vite/manifest.json                                   [39m[1m[2m  4.66 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[35m_app/immutable/assets/_layout.lT6z6r1s.css            [39m[1m[2m 25.33 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mchunks/ssr2.js                                        [39m[1m[2m  0.10 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36menv.js                                                [39m[1m[2m  0.23 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36minternal.js                                           [39m[1m[2m  0.32 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mentries/pages/_layout.svelte.js                       [39m[1m[2m  0.40 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mchunks/state.svelte.js                                [39m[1m[2m  0.42 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mentries/fallbacks/error.svelte.js                     [39m[1m[2m  0.47 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mchunks/chevron-right.js                               [39m[1m[2m  0.53 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mchunks/server.js                                      [39m[1m[2m  0.62 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mchunks/stores.js                                      [39m[1m[2m  0.67 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mchunks/utils2.js                                      [39m[1m[2m  1.09 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mchunks/index.js                                       [39m[1m[2m  2.58 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mentries/pages/(dashboard)/_page.svelte.js             [39m[1m[2m  2.66 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mchunks/shopping-cart.js                               [39m[1m[2m  2.71 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mentries/pages/login/_page.svelte.js                   [39m[1m[2m  4.25 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mchunks/exports.js                                     [39m[1m[2m  5.54 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mchunks/internal.js                                    [39m[1m[2m  7.49 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mchunks/ssr.js                                         [39m[1m[2m  8.25 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mchunks/Icon.js                                        [39m[1m[2m  8.79 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mentries/pages/(dashboard)/_layout.svelte.js           [39m[1m[2m 14.79 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mentries/pages/(dashboard)/categories/_page.svelte.js  [39m[1m[2m 20.07 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mchunks/utils.js                                       [39m[1m[2m 34.21 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mremote-entry.js                                       [39m[1m[2m 36.81 kB[22m[1m[22m
+[2m.svelte-kit/output/server/[22m[36mindex.js                                              [39m[1m[2m130.91 kB[22m[1m[22m
+[32m✓ built in 30.33s[39m
+
+Run npm run preview to preview your production build locally.
+
+> Using @sveltejs/adapter-auto
+  Could not detect a supported production environment. See https://svelte.dev/docs/kit/adapters to learn how to configure your app to run on the platform of your choosing
+  ✔ done

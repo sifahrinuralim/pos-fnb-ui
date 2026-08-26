@@ -10,15 +10,21 @@
 * **Production-Ready:** Fully functional, typed code without `TODO`s, placeholders, or truncated snippets. Explicitly handle API errors.
 * **Compact Updates:** For edits to existing code, provide only the target component or function with its explicit file path header.
 
-## 3. PROJECT ARCHITECTURE & LAYER BOUNDARIES
-* **`src/lib/services/`:** API Integration layer (Axios instance, interceptors, handling standard backend JSON format `{ success, message, data, errors }`).
-* **`src/lib/stores/`:** Svelte state management (Auth state, Cart/Order state, Table state).
-* **`src/lib/components/`:** Modular reusable UI components (UI elements, modals, order cards, tables).
-* **`src/routes/`:** SvelteKit pages, route guards, and layouts.
+## 3. STRICT EXECUTION BOUNDARIES (NO BUILD & NO TESTING)
+* **Zero Testing:** Do NOT write, modify, or execute unit tests, integration tests, or E2E tests (Vitest, Jest, Playwright, Cypress).
+* **Zero Build & Run Commands:** NEVER run build scripts (`npm run build`, `vite build`, `svelte-kit sync`) or dev servers (`npm run dev`) in the terminal.
+* **Coding Only Scope:** Focus 100% of the session token allowance on generating clean, modular, production-ready source code files.
+* **Terminal Restrictions:** Only suggest or execute non-blocking, non-build maintenance commands if explicitly requested (e.g., `npm i <package_name>`).
 
-## 4. CODE STYLE & PATTERNS
-* **Tailwind First:** Utility-first CSS styling for rapid UI development. Responsive design is mandatory.
-* **Standard Response Integration:** API handlers must expect standard JSON response format:
+## 4. PROJECT ARCHITECTURE & LAYER BOUNDARIES
+* **`src/lib/services/`:** API Integration layer (Axios/Fetch wrapper, auto-bearer token, handling backend JSON format `{ success, message, data, errors }`).
+* **`src/lib/stores/`:** Svelte state management (Auth state, Cart/Order state, Table state, Active Session).
+* **`src/lib/components/`:** Modular reusable UI components (UI elements, modals, KDS cards, data tables, cart panel).
+* **`src/routes/`:** SvelteKit pages (`+page.svelte`), route guards, and layouts (`+layout.svelte`).
+
+## 5. CODE STYLE & PATTERNS
+* **Tailwind First:** Utility-first CSS styling for rapid UI development. Responsive design for Cashier & KDS layouts is mandatory.
+* **API Schema Alignment:** All data structures must strictly align with `pos-api.json` and standard JSON envelope format:
 ```json
 {
   "success": true,

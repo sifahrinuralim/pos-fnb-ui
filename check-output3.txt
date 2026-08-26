@@ -1,0 +1,22 @@
+
+====================================
+Loading svelte-check in workspace: c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui
+Getting Svelte diagnostics...
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\routes\(dashboard)\categories\+page.svelte[39m:330:35
+[31mError[39m: Unexpected token (svelte)
+[36m						<button
+							on:click={() => goToPage(p [35m[36mas number)}
+							class="rounded-lg px-3 py-2 text-sm font-medium transition {p === currentPage ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-100'}"
+[39m
+
+c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui\[32msrc\routes\(dashboard)\categories\+page.svelte[39m:330:35
+[31mError[39m: Unexpected token (ts)
+[36m						<button
+							on:click={() => goToPage(p [35m[36mas number)}
+							class="rounded-lg px-3 py-2 text-sm font-medium transition {p === currentPage ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-100'}"
+[39m
+
+====================================
+[31msvelte-check found 2 errors and 0 warnings in 1 file
+[39m

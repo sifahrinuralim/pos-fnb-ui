@@ -1,0 +1,8 @@
+
+====================================
+Loading svelte-check in workspace: c:\Users\zelver\Documents\PROJECT\GITHUB\pos-fnb-ui
+Getting Svelte diagnostics...
+
+====================================
+[32msvelte-check found 0 errors and 0 warnings
+[39m

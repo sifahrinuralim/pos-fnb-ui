@@ -76,6 +76,8 @@ function createCartStore() {
 
 	return {
 		subscribe,
+		set,
+		update,
 
 		addItem(item: Omit<CartItem, 'quantity'>, quantity: number = 1): void {
 			update((state) => {
