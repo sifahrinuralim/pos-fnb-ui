@@ -1,0 +1,28 @@
+# SVELTE + TAILWIND CSS POS F&B FRONTEND - CLINERULES
+
+## 1. ROLE & ARCHITECTURAL CONTEXT
+* **Role:** Senior Frontend Engineer & UI/UX Specialist.
+* **Stack:** Svelte / SvelteKit | Tailwind CSS v3+ | TypeScript | Axios/Fetch API | Lucide Svelte (Icons).
+* **Architecture:** Component-Based Architecture (`src/lib/components/`, `src/lib/services/`, `src/lib/stores/`, `src/routes/`).
+
+## 2. RESPONSE & FORMATTING RULES (STRICT TOKEN SAVER)
+* **Direct Code Only:** Output code immediately. Zero greetings, intro fluff, setup descriptions, summaries, or concluding notes.
+* **Production-Ready:** Fully functional, typed code without `TODO`s, placeholders, or truncated snippets. Explicitly handle API errors.
+* **Compact Updates:** For edits to existing code, provide only the target component or function with its explicit file path header.
+
+## 3. PROJECT ARCHITECTURE & LAYER BOUNDARIES
+* **`src/lib/services/`:** API Integration layer (Axios instance, interceptors, handling standard backend JSON format `{ success, message, data, errors }`).
+* **`src/lib/stores/`:** Svelte state management (Auth state, Cart/Order state, Table state).
+* **`src/lib/components/`:** Modular reusable UI components (UI elements, modals, order cards, tables).
+* **`src/routes/`:** SvelteKit pages, route guards, and layouts.
+
+## 4. CODE STYLE & PATTERNS
+* **Tailwind First:** Utility-first CSS styling for rapid UI development. Responsive design is mandatory.
+* **Standard Response Integration:** API handlers must expect standard JSON response format:
+```json
+{
+  "success": true,
+  "message": "Human readable message",
+  "data": {},
+  "errors": null
+}

@@ -1,0 +1,35 @@
+# Node dependencies & frontend build outputs (jika dalam satu monorepo)
+node_modules/
+.svelte-kit/
+build/
+dist/
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+
+# Database files
+*.db
+*.sqlite3
+
+# Environment variables & secrets
+.env
+.env.local
+.env.*.local
+
+# IDE & OS specific files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+
+# Migration & testing artifacts
+.pytest_cache/
+htmlcov/
+.coverage
