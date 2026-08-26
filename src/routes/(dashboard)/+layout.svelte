@@ -57,8 +57,11 @@
 	}
 
 	function isActive(href: string): boolean {
-		if (href === '/') return $page.url.pathname === '/';
-		return $page.url.pathname.startsWith(href);
+		const path = $page.url.pathname;
+		if (href === '/') return path === '/';
+		// Jaga menu "Laporan" tetap aktif di semua sub-halaman laporan (/reports/*)
+		if (href.startsWith('/reports/')) return path.startsWith('/reports/');
+		return path.startsWith(href);
 	}
 
 	async function handleLogout(): Promise<void> {
