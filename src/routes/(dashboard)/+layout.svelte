@@ -31,18 +31,20 @@
 		href: string;
 		label: string;
 		icon: typeof LayoutDashboard;
+		/** Prefix URL agar item tetap aktif di semua sub-halamannya (mis. /inventory/*, /reports/*) */
+		section?: string;
 	}
 
 	const mainNav: NavItem[] = [
 		{ href: '/', label: 'Dashboard', icon: LayoutDashboard },
-		{ href: '/pos', label: 'Kasir (POS)', icon: ShoppingCart },
+		{ href: '/pos', label: 'Kasir (POS)', icon: ShoppingCart, section: '/pos' },
 		{ href: '/menu-items', label: 'Menu & Produk', icon: UtensilsCrossed },
 		{ href: '/categories', label: 'Kategori', icon: Tag },
 		{ href: '/tables', label: 'Meja', icon: LayoutGrid },
-		{ href: '/orders', label: 'Pesanan', icon: ClipboardList },
+		{ href: '/orders', label: 'Pesanan', icon: ClipboardList, section: '/orders' },
 		{ href: '/payments', label: 'Pembayaran', icon: CreditCard },
-		{ href: '/inventory/stocks', label: 'Inventaris', icon: Package },
-		{ href: '/reports/sales-summary', label: 'Laporan', icon: BarChart3 },
+		{ href: '/inventory/stocks', label: 'Inventaris', icon: Package, section: '/inventory' },
+		{ href: '/reports/sales-summary', label: 'Laporan', icon: BarChart3, section: '/reports' },
 		{ href: '/discounts', label: 'Diskon & Promo', icon: Tag },
 	];
 
@@ -56,12 +58,12 @@
 		goto('/login');
 	}
 
-	function isActive(href: string): boolean {
+	function isActive(href: string, section?: string): boolean {
 		const path = $page.url.pathname;
 		if (href === '/') return path === '/';
-		// Jaga menu "Laporan" tetap aktif di semua sub-halaman laporan (/reports/*)
-		if (href.startsWith('/reports/')) return path.startsWith('/reports/');
-		return path.startsWith(href);
+		// Menu berkelompok tetap aktif di semua sub-halamannya (mis. /inventory/*, /reports/*)
+		const base = section ?? href;
+		return path === base || path.startsWith(base + '/');
 	}
 
 	async function handleLogout(): Promise<void> {
@@ -104,11 +106,11 @@
 						href={item.href}
 						on:click={() => (sidebarOpen = false)}
 						class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
-						{isActive(item.href) ? 'bg-primary-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}"
+						{isActive(item.href, item.section) ? 'bg-primary-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}"
 					>
 						<svelte:component this={item.icon} class="w-5 h-5 shrink-0" />
 						<span>{item.label}</span>
-						{#if isActive(item.href)}
+						{#if isActive(item.href, item.section)}
 							<ChevronRight class="w-4 h-4 ml-auto" />
 						{/if}
 					</a>
@@ -122,7 +124,7 @@
 						href={item.href}
 						on:click={() => (sidebarOpen = false)}
 						class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
-						{isActive(item.href) ? 'bg-primary-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}"
+						{isActive(item.href, item.section) ? 'bg-primary-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}"
 					>
 						<svelte:component this={item.icon} class="w-5 h-5 shrink-0" />
 						<span>{item.label}</span>
