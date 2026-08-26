@@ -41,6 +41,7 @@
 		{ href: '/orders', label: 'Pesanan', icon: ClipboardList },
 		{ href: '/inventory', label: 'Inventaris', icon: Package },
 		{ href: '/reports', label: 'Laporan', icon: BarChart3 }
+		{ href: '/discounts', label: 'Diskon & Promo', icon: Tag },
 	];
 
 	const settingsNav: NavItem[] = [
