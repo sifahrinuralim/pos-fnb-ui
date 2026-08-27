@@ -58,8 +58,12 @@
 		goto('/login');
 	}
 
+	// Reaktif: ikut berubah saat navigasi berlangsung, memicu render ulang
+	// sidebar (active highlight) setiap kali URL/path berubah.
+	$: currentPath = $page.url.pathname;
+
 	function isActive(href: string, section?: string): boolean {
-		const path = $page.url.pathname;
+		const path = currentPath;
 		if (href === '/') return path === '/';
 		// Menu berkelompok tetap aktif di semua sub-halamannya (mis. /inventory/*, /reports/*)
 		const base = section ?? href;
@@ -172,7 +176,9 @@
 			</header>
 
 			<main class="p-4 sm:p-6 lg:p-8">
-				<slot />
+				{#key $page.url.pathname + $page.url.search}
+					<slot />
+				{/key}
 			</main>
 		</div>
 	</div>

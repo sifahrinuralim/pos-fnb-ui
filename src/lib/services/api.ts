@@ -44,6 +44,15 @@ api.interceptors.request.use(
 		if (auth.token) {
 			config.headers.Authorization = `Bearer ${auth.token}`;
 		}
+
+		// Mencegah respons GET basi dari cache browser saat berpindah halaman
+		// (fix: data tidak berubah setelah navigasi karena diambil dari cache).
+		if ((config.method ?? 'get').toLowerCase() === 'get') {
+			config.headers['Cache-Control'] = 'no-cache, must-revalidate';
+			config.headers['Pragma'] = 'no-cache';
+			config.headers['Expires'] = '0';
+		}
+
 		return config;
 	},
 	(error) => Promise.reject(error)

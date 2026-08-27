@@ -1,11 +1,12 @@
 <script lang="ts">
 import { page } from '$app/stores';
-import { onMount } from 'svelte';
 import { Loader2, Inbox, ArrowLeft, Wallet, CheckCircle2 } from 'lucide-svelte';
 import { orderStore } from '$lib/stores/orders';
 import type { OrderStatus } from '$lib/api/orders';
 
-const orderId = $page.params.id;
+// Reaktif: saat berpindah antar detail order (id di URL berubah),
+// orderId ikut berubah dan refetch otomatis dijalankan di bawah.
+$: orderId = $page.params.id;
 
 const statusConfig: Record<OrderStatus, { label: string; badge: string }> = {
 pending: { label: 'Menunggu', badge: 'bg-amber-100 text-amber-700' },
@@ -49,9 +50,16 @@ minute: '2-digit'
 });
 }
 
-onMount(() => {
-if (orderId) orderStore.getOrder(orderId);
-});
+// 1) Refetch otomatis saat id berubah (navigasi antar order) ATAU saat komponen
+//    dibuat ulang — menjamin data selalu fresh, tidak pernah pakai cache lama.
+$: if (orderId) {
+	orderStore.getOrder(orderId);
+}
+
+// 2) Bersihkan order lama saat id berbeda agar tidak ada flash data pesanan lain.
+$: if (orderId && $orderStore.currentOrder && $orderStore.currentOrder.id !== orderId) {
+	orderStore.clearCurrentOrder();
+}
 
 async function changeStatus(status: OrderStatus): Promise<void> {
 if (!orderId) return;
