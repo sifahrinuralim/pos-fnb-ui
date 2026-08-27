@@ -218,11 +218,11 @@
 				</div>
 			</div>
 
-			<div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-				<button class="btn-secondary" on:click={() => goto('/orders')}>
+			<div class="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+				<button class="btn-secondary min-w-[10rem]" on:click={() => goto('/orders')}>
 					<Receipt class="w-4 h-4" /> Ke Pesanan
 				</button>
-				<button class="btn-primary" on:click={() => goto('/payments')}>
+				<button class="btn-primary min-w-[10rem]" on:click={() => goto('/payments')}>
 					<Wallet class="w-4 h-4" /> Lihat Pembayaran
 				</button>
 			</div>
