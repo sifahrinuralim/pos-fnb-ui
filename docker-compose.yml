@@ -9,4 +9,4 @@ services:
     env_file:
       - .env
     ports:
-      - "8075:3000"
+      - "8075:8075"
