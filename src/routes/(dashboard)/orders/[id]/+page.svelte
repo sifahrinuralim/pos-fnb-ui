@@ -43,7 +43,8 @@ const allowedStatusTargets: Record<string, OrderStatus[]> = {
 $: currentRole = $userRole;
 $: order = $orderStore.currentOrder;
 $: canPay = currentRole === 'admin' || currentRole === 'manager' || currentRole === 'cashier';
-$: visibleNextStatuses: OrderStatus[] = order
+let visibleNextStatuses: OrderStatus[] = [];
+$: visibleNextStatuses = order
 	? (nextStatuses[order.status] ?? []).filter((status) =>
 			(allowedStatusTargets[currentRole ?? ''] ?? []).includes(status)
 		)
