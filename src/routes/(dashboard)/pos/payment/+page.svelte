@@ -18,6 +18,7 @@
 	} from 'lucide-svelte';
 	import { createPayment, type Payment } from '$lib/api/payments';
 	import { orderStore } from '$lib/stores/orders';
+	import { tablesStore } from '$lib/stores/tables';
 
 	type PaymentMethod = 'cash' | 'qris' | 'card';
 
@@ -149,6 +150,9 @@
 			// Integrasi: setelah pembayaran sukses, status order menjadi served (selesai)
 			try {
 				await orderStore.updateStatus(order.id, 'served');
+				if (order.table_id) {
+					await tablesStore.updateTable(order.table_id, { status: 'available' });
+				}
 			} catch (statusErr: any) {
 				// Pembayaran sudah sukses; gagal update status tidak menggagalkan alur
 				console.error('Gagal update status order:', statusErr);
