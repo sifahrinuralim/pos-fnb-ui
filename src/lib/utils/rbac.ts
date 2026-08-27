@@ -19,7 +19,8 @@ export type Feature =
 	| 'discounts'
 	| 'orders'
 	| 'payments'
-	| 'pos';
+	| 'pos'
+	| 'customers';
 
 /** Route path prefixes each role is allowed to access */
 export const roleRoutes: Record<AppRole, string[]> = {
@@ -32,9 +33,9 @@ export const roleRoutes: Record<AppRole, string[]> = {
 
 /** Feature-level permissions per role */
 const roleFeatures: Record<AppRole, Feature[]> = {
-	admin: ['users', 'settings', 'inventory', 'reports', 'menu_items', 'categories', 'tables', 'discounts', 'orders', 'payments', 'pos'],
-	manager: ['settings', 'inventory', 'reports', 'menu_items', 'categories', 'tables', 'discounts', 'orders', 'payments', 'pos'],
-	cashier: ['orders', 'payments', 'pos'],
+	admin: ['users', 'settings', 'inventory', 'reports', 'menu_items', 'categories', 'tables', 'discounts', 'orders', 'payments', 'pos', 'customers'],
+	manager: ['settings', 'inventory', 'reports', 'menu_items', 'categories', 'tables', 'discounts', 'orders', 'payments', 'pos', 'customers'],
+	cashier: ['orders', 'payments', 'pos', 'customers'],
 	kitchen: ['orders'],
 	waiter: ['orders']
 };

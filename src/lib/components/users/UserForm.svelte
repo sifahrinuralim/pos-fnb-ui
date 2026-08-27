@@ -63,7 +63,7 @@
 		if (!email.trim()) ve.email = ['Email wajib diisi.'];
 		else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) ve.email = ['Format email tidak valid.'];
 		if (!isEdit && !password) ve.password = ['Password wajib diisi untuk user baru.'];
-		if (password && password.length < 8 && !isEdit) ve.password = ['Password minimal 8 karakter.'];
+		else if (password && password.length < 8) ve.password = ['Password minimal 8 karakter.'];
 		if (Object.keys(ve).length > 0) { errors = ve; return; }
 		submitting = true;
 		dispatch('submit', {

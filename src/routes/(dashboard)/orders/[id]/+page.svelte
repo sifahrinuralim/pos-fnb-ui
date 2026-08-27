@@ -3,6 +3,7 @@ import { page } from '$app/stores';
 import { Loader2, Inbox, ArrowLeft, Wallet, CheckCircle2 } from 'lucide-svelte';
 import { orderStore } from '$lib/stores/orders';
 import type { OrderStatus } from '$lib/api/orders';
+import { userRole } from '$lib/stores/auth';
 
 // Reaktif: saat berpindah antar detail order (id di URL berubah),
 // orderId ikut berubah dan refetch otomatis dijalankan di bawah.
@@ -29,6 +30,24 @@ in_kitchen: ['ready', 'cancelled'],
 ready: ['served'],
 served: []
 };
+
+// ── RBAC: target status yang boleh dipilih per role ──
+const allowedStatusTargets: Record<string, OrderStatus[]> = {
+	admin: ['in_kitchen', 'ready', 'served', 'cancelled'],
+	manager: ['in_kitchen', 'ready', 'served', 'cancelled'],
+	cashier: [],
+	kitchen: ['in_kitchen', 'ready'],
+	waiter: ['served']
+};
+
+$: currentRole = $userRole;
+$: order = $orderStore.currentOrder;
+$: canPay = currentRole === 'admin' || currentRole === 'manager' || currentRole === 'cashier';
+$: visibleNextStatuses: OrderStatus[] = order
+	? (nextStatuses[order.status] ?? []).filter((status) =>
+			(allowedStatusTargets[currentRole ?? ''] ?? []).includes(status)
+		)
+	: [];
 
 function formatCurrency(value: number): string {
 return new Intl.NumberFormat('id-ID', {
@@ -94,12 +113,11 @@ await orderStore.updateStatus(orderId, status);
 </div>
 {/if}
 
-{#if $orderStore.loading && !$orderStore.currentOrder}
+{#if $orderStore.loading && !order}
 <div class="flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white py-20 text-sm text-gray-500">
 <Loader2 class="w-5 h-5 animate-spin" /> Memuat detail order...
 </div>
-{:else if $orderStore.currentOrder}
-{@const order = $orderStore.currentOrder}
+{:else if order}
 <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
 <div class="space-y-6 lg:col-span-2">
 <!-- Item pesanan -->
@@ -208,11 +226,11 @@ await orderStore.updateStatus(orderId, status);
 </dl>
 </div>
 
-{#if order.status !== 'served' && order.status !== 'cancelled'}
+{#if visibleNextStatuses.length > 0}
 <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
 <h2 class="mb-3 text-base font-bold text-gray-900">Perbarui Status</h2>
 <div class="flex flex-col gap-2">
-{#each nextStatuses[order.status] ?? [] as status}
+{#each visibleNextStatuses as status}
 <button class="btn-primary w-full" on:click={() => changeStatus(status)}>
 <CheckCircle2 class="w-4 h-4" />
 {statusConfig[status]?.label ?? status}
@@ -222,7 +240,7 @@ await orderStore.updateStatus(orderId, status);
 </div>
 {/if}
 
-{#if order.status === 'pending' || order.status === 'in_kitchen' || order.status === 'ready'}
+{#if canPay && (order.status === 'pending' || order.status === 'in_kitchen' || order.status === 'ready')}
 <a href="/pos/payment?order_id={order.id}" class="btn-primary flex w-full items-center justify-center gap-2">
 <Wallet class="w-4 h-4" /> Lanjut ke Pembayaran
 </a>
