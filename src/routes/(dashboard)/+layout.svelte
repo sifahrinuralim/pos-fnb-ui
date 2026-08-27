@@ -53,8 +53,8 @@
 
 	const settingsNav: NavItem[] = [
 		{ href: '/users', label: 'Pengguna', icon: Users, feature: 'users' },
-		{ href: '/settings/store', label: 'Outlet', icon: Store },
-		{ href: '/settings/tax', label: 'Pajak', icon: SlidersHorizontal }
+		{ href: '/settings/store', label: 'Outlet', icon: Store, feature: 'settings' },
+		{ href: '/settings/tax', label: 'Pajak', icon: SlidersHorizontal, feature: 'settings' }
 	];
 
 	$: if (browser && $authStore.loaded && !$authStore.isAuthenticated) {
