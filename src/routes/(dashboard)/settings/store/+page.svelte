@@ -4,7 +4,7 @@
 	import { getActiveStoreSetting, createStoreSetting, updateStoreSetting } from '$lib/api/settings';
 
 	interface StoreSetting {
-		id?: number;
+		id?: string;
 		store_name: string;
 		address: string | null;
 		phone: string | null;

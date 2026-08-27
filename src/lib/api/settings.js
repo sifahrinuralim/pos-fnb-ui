@@ -68,11 +68,23 @@ export function createTaxConfig(data) {
 }
 
 /**
+ * GET /api/v1/tax-configs/{config_id}
+ *
+ * Mengambil detail satu konfigurasi pajak.
+ *
+ * @param {string} configId - ID konfigurasi pajak (uuid)
+ * @returns {Promise<import('$lib/services/api').ApiResponse<TaxConfig>>}
+ */
+export function getTaxConfig(configId) {
+	return apiGet(`/tax-configs/${configId}`);
+}
+
+/**
  * PATCH /api/v1/tax-configs/{config_id}
  *
  * Memperbarui konfigurasi pajak.
  *
- * @param {number} configId - ID konfigurasi pajak
+ * @param {string} configId - ID konfigurasi pajak (uuid)
  * @param {Partial<TaxConfig>} data - Payload pembaruan
  * @returns {Promise<import('$lib/services/api').ApiResponse<TaxConfig>>}
  */
@@ -85,7 +97,7 @@ export function updateTaxConfig(configId, data) {
  *
  * Menghapus konfigurasi pajak.
  *
- * @param {number} configId - ID konfigurasi pajak
+ * @param {string} configId - ID konfigurasi pajak (uuid)
  * @returns {Promise<import('$lib/services/api').ApiResponse<Record<string, never>>>}
  */
 export function deleteTaxConfig(configId) {
@@ -131,11 +143,23 @@ export function getActiveStoreSetting() {
 }
 
 /**
+ * GET /api/v1/store-settings/{setting_id}
+ *
+ * Mengambil detail satu pengaturan outlet.
+ *
+ * @param {string} settingId - ID pengaturan outlet (uuid)
+ * @returns {Promise<import('$lib/services/api').ApiResponse<StoreSetting>>}
+ */
+export function getStoreSetting(settingId) {
+	return apiGet(`/store-settings/${settingId}`);
+}
+
+/**
  * PATCH /api/v1/store-settings/{setting_id}
  *
  * Memperbarui pengaturan outlet.
  *
- * @param {number} settingId - ID pengaturan outlet
+ * @param {string} settingId - ID pengaturan outlet (uuid)
  * @param {Partial<StoreSetting>} data - Payload pembaruan
  * @returns {Promise<import('$lib/services/api').ApiResponse<StoreSetting>>}
  */
@@ -148,7 +172,7 @@ export function updateStoreSetting(settingId, data) {
  *
  * Menghapus pengaturan outlet.
  *
- * @param {number} settingId - ID pengaturan outlet
+ * @param {string} settingId - ID pengaturan outlet (uuid)
  * @returns {Promise<import('$lib/services/api').ApiResponse<Record<string, never>>>}
  */
 export function deleteStoreSetting(settingId) {

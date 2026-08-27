@@ -60,12 +60,19 @@ export interface DiscountResponse {
 	updated_at?: string;
 }
 
-export interface DiscountValidationResult {
-	valid: boolean;
-	discount: DiscountResponse | null;
-	discount_amount: number;
-	message?: string;
+/** Matches backend PromoValidateResponse (POST /api/v1/discounts/validate-promo) */
+export interface PromoValidateResponse {
+	is_valid: boolean;
+	discount_id: string | null;
+	discount_name: string | null;
+	discount_type: DiscountType | null;
+	discount_value: string | null;
+	calculated_discount: string | null;
+	reason: string | null;
 }
+
+/** @deprecated Renamed to PromoValidateResponse to match the backend schema. */
+export type DiscountValidationResult = PromoValidateResponse;
 
 // ──────────────────────────────────────────────
 // API Functions
@@ -83,6 +90,11 @@ export async function createDiscount(payload: DiscountCreate): Promise<ApiRespon
 	return apiPost<DiscountResponse>('/discounts', payload);
 }
 
+/** GET /api/v1/discounts/{discount_id} */
+export async function getDiscount(id: string): Promise<ApiResponse<DiscountResponse>> {
+	return apiGet<DiscountResponse>(`/discounts/${id}`);
+}
+
 /** PATCH /api/v1/discounts/{discount_id} */
 export async function updateDiscount(
 	id: string,
@@ -96,15 +108,15 @@ export async function deleteDiscount(id: string): Promise<ApiResponse<Record<str
 	return apiDelete<Record<string, never>>(`/discounts/${id}`);
 }
 
-/** POST /api/v1/discounts/validate — validate a promo code against an order total */
+/** POST /api/v1/discounts/validate-promo — validate a promo code against an order total */
 export async function validatePromoCode(
-	code: string,
-	total: number,
+	promoCode: string,
+	orderTotal: number,
 	itemIds?: string[]
-): Promise<ApiResponse<DiscountValidationResult>> {
-	return apiPost<DiscountValidationResult>('/discounts/validate', {
-		code,
-		total,
+): Promise<ApiResponse<PromoValidateResponse>> {
+	return apiPost<PromoValidateResponse>('/discounts/validate-promo', {
+		promo_code: promoCode,
+		order_total: orderTotal,
 		item_ids: itemIds
 	});
 }

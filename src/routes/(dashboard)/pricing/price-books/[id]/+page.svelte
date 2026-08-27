@@ -3,10 +3,10 @@
     import { onMount } from 'svelte';
     import { getPriceBook, listProductPrices, createProductPrice, type PriceBook, type ProductPrice } from '$lib/api/pricing.api';
 
-    const id = parseInt($page.params.id ?? '');
+    const id = $page.params.id ?? '';
     let priceBook: PriceBook | null = null;
     let productPrices: ProductPrice[] = [];
-    
+
     let newItem = { menu_item_id: '', variant_id: '', override_price: '' };
 
     async function loadData() {
@@ -18,8 +18,8 @@
     async function handleAdd() {
         const res = await createProductPrice({
             price_book_id: id,
-            menu_item_id: parseInt(newItem.menu_item_id),
-            variant_id: newItem.variant_id ? parseInt(newItem.variant_id) : null,
+            menu_item_id: newItem.menu_item_id || null,
+            variant_id: newItem.variant_id || null,
             override_price: parseFloat(newItem.override_price)
         });
         if (res.success) {
@@ -59,8 +59,8 @@
         <div class="p-4 border bg-gray-50">
             <h3 class="font-bold mb-2">Add Product Price</h3>
             <div class="flex gap-2">
-                <input type="number" placeholder="Menu Item ID" bind:value={newItem.menu_item_id} class="border p-1" />
-                <input type="number" placeholder="Variant ID" bind:value={newItem.variant_id} class="border p-1" />
+                <input type="text" placeholder="Menu Item ID (uuid)" bind:value={newItem.menu_item_id} class="border p-1" />
+                <input type="text" placeholder="Variant ID (uuid)" bind:value={newItem.variant_id} class="border p-1" />
                 <input type="number" placeholder="Price" bind:value={newItem.override_price} class="border p-1" />
                 <button on:click={handleAdd} class="bg-blue-600 text-white px-4 py-1">Add</button>
             </div>

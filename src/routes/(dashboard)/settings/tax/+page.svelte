@@ -4,7 +4,7 @@
 	import { listTaxConfigs, createTaxConfig, updateTaxConfig, deleteTaxConfig } from '$lib/api/settings';
 
 	interface TaxConfig {
-		id: number;
+		id: string;
 		name: string;
 		service_charge_rate: number;
 		ppn_rate: number;
@@ -21,7 +21,7 @@
 
 	// ── Form state ──
 	let showForm = false;
-	let editingId: number | null = null;
+	let editingId: string | null = null;
 	let form = { name: '', service_charge_rate: 0, ppn_rate: 0, is_active: false };
 
 	function resetForm(): void {
