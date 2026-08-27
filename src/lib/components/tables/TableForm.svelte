@@ -44,7 +44,7 @@
 		e.preventDefault();
 
 		const number = Number(table_number);
-		if (!table_number.trim() || !Number.isInteger(number) || number <= 0) {
+		if (!String(table_number || '').trim() || !Number.isInteger(number) || number <= 0) {
 			errors = { table_number: ['Nomor meja wajib diisi dan harus bilangan bulat positif.'] };
 			return;
 		}
@@ -55,7 +55,7 @@
 			return;
 		}
 
-		if (name.trim().length > 100) {
+		if (String(name || '').trim().length > 100) {
 			errors = { name: ['Nama meja maksimal 100 karakter.'] };
 			return;
 		}
@@ -64,7 +64,7 @@
 		dispatch('submit', {
 			payload: {
 				table_number: number,
-				name: name.trim() || undefined,
+				name: String(name || '').trim() || undefined,
 				seat_capacity: capacity,
 				status
 			},
