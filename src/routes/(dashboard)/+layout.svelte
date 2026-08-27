@@ -107,6 +107,7 @@
 						on:click={() => (sidebarOpen = false)}
 						class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
 						{isActive(item.href, item.section) ? 'bg-primary-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}"
+						aria-current={isActive(item.href, item.section) ? 'page' : undefined}
 					>
 						<svelte:component this={item.icon} class="w-5 h-5 shrink-0" />
 						<span>{item.label}</span>
@@ -125,6 +126,7 @@
 						on:click={() => (sidebarOpen = false)}
 						class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
 						{isActive(item.href, item.section) ? 'bg-primary-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}"
+						aria-current={isActive(item.href, item.section) ? 'page' : undefined}
 					>
 						<svelte:component this={item.icon} class="w-5 h-5 shrink-0" />
 						<span>{item.label}</span>
