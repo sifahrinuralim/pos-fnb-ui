@@ -390,7 +390,7 @@
 						<span class="text-lg font-extrabold text-primary-600">{formatCurrency(total)}</span>
 					</div>
 
-					<button class="btn-primary w-full" on:click={handleCreateOrder} disabled={creating}>
+					<button class="btn-primary flex w-full items-center justify-center gap-2" on:click={handleCreateOrder} disabled={creating}>
 						{#if creating}
 							<Loader2 class="w-4 h-4 animate-spin" /> Membuat order...
 						{:else}
@@ -399,7 +399,7 @@
 					</button>
 
 					{#if createdOrderId}
-						<button class="btn-secondary w-full" on:click={goToPayment}>
+						<button class="btn-secondary flex w-full items-center justify-center gap-2" on:click={goToPayment}>
 							Lanjut ke Pembayaran <ArrowRight class="w-4 h-4" />
 						</button>
 					{/if}

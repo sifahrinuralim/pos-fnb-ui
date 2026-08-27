@@ -1,6 +1,6 @@
 <script lang="ts">
 import { page } from '$app/stores';
-import { Loader2, Inbox, ArrowLeft, Wallet, CheckCircle2 } from 'lucide-svelte';
+import { Loader2, Inbox, ArrowLeft, Wallet, CheckCircle2, XCircle } from 'lucide-svelte';
 import { orderStore } from '$lib/stores/orders';
 import type { OrderStatus } from '$lib/api/orders';
 import { userRole } from '$lib/stores/auth';
@@ -44,6 +44,7 @@ $: currentRole = $userRole;
 $: order = $orderStore.currentOrder;
 $: canPay = currentRole === 'admin' || currentRole === 'manager' || currentRole === 'cashier';
 let visibleNextStatuses: OrderStatus[] = [];
+let updatingStatus: OrderStatus | null = null;
 $: visibleNextStatuses = order
 	? (nextStatuses[order.status] ?? []).filter((status) =>
 			(allowedStatusTargets[currentRole ?? ''] ?? []).includes(status)
@@ -82,11 +83,14 @@ $: if (orderId && $orderStore.currentOrder && $orderStore.currentOrder.id !== or
 }
 
 async function changeStatus(status: OrderStatus): Promise<void> {
-if (!orderId) return;
+if (!orderId || updatingStatus) return;
+updatingStatus = status;
 try {
 await orderStore.updateStatus(orderId, status);
 } catch {
 /* error sudah di-set di store */
+} finally {
+updatingStatus = null;
 }
 }
 </script>
@@ -232,10 +236,25 @@ await orderStore.updateStatus(orderId, status);
 <h2 class="mb-3 text-base font-bold text-gray-900">Perbarui Status</h2>
 <div class="flex flex-col gap-2">
 {#each visibleNextStatuses as status}
-<button class="btn-primary w-full" on:click={() => changeStatus(status)}>
-<CheckCircle2 class="w-4 h-4" />
+{#if status === 'cancelled'}
+<button class="btn-danger flex w-full items-center justify-center gap-2" on:click={() => changeStatus(status)} disabled={updatingStatus !== null}>
+{#if updatingStatus === status}
+<Loader2 class="w-4 h-4 animate-spin" />
+{:else}
+<XCircle class="w-4 h-4" />
+{/if}
 {statusConfig[status]?.label ?? status}
 </button>
+{:else}
+<button class="btn-primary flex w-full items-center justify-center gap-2" on:click={() => changeStatus(status)} disabled={updatingStatus !== null}>
+{#if updatingStatus === status}
+<Loader2 class="w-4 h-4 animate-spin" />
+{:else}
+<CheckCircle2 class="w-4 h-4" />
+{/if}
+{statusConfig[status]?.label ?? status}
+</button>
+{/if}
 {/each}
 </div>
 </div>
