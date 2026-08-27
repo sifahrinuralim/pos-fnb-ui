@@ -57,9 +57,9 @@
 		successMessage = '';
 		try {
 			const res = await listUsers(skip, limit, filterActive);
-			if (res.success) {
-				users = res.data.items;
-				totalUsers = res.data.total;
+			if (res.success && res.data) {
+				users = res.data.items ?? [];
+				totalUsers = res.data.total ?? 0;
 			} else {
 				errorMessage = res.message || 'Gagal memuat data pengguna.';
 			}
