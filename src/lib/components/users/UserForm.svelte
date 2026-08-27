@@ -79,6 +79,7 @@
 		});
 	}
 	export function setServerErrors(se: Record<string, string[]>): void { errors = se; submitting = false; }
+</script>
 
 {#if open}
 	<div role="presentation" class="fixed inset-0 z-40 bg-black/50 transition-opacity" on:click={handleClose} />
@@ -138,5 +139,3 @@
 		</div>
 	</div>
 {/if}
-
-</script>
