@@ -1,5 +1,6 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
 import { get } from 'svelte/store';
+import { env } from '$env/dynamic/public';
 import { authStore } from '$lib/stores/auth';
 
 // ──────────────────────────────────────────────
@@ -23,7 +24,7 @@ interface RefreshTokenResponse {
 // Axios Instance
 // ──────────────────────────────────────────────
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000/api';
+const BASE_URL = env.PUBLIC_API_BASE_URL ?? 'http://localhost:8000/api/v1';
 
 const api = axios.create({
 	baseURL: BASE_URL,

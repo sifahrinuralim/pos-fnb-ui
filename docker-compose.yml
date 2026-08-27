@@ -1,0 +1,12 @@
+services:
+  pos-fnb-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pos-fnb-ui:latest
+    container_name: pos-fnb-ui
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
