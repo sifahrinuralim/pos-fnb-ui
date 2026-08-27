@@ -58,12 +58,15 @@
 		goto('/login');
 	}
 
-	// Reaktif: ikut berubah saat navigasi berlangsung, memicu render ulang
-	// sidebar (active highlight) setiap kali URL/path berubah.
-	$: currentPath = $page.url.pathname;
-
-	function isActive(href: string, section?: string): boolean {
-		const path = currentPath;
+	// Active-highlight detection.
+	//
+	// PENTING: `path` WAJIB dikirim sebagai argumen dari template
+	// (`isActive($page.url.pathname, ...)`). Svelte hanya melacak variabel
+	// reaktif yang direferensikan LANGSUNG di template — variabel yang dibaca
+	// di dalam body fungsi biasa (mis. `const path = $page.url.pathname`
+	// di dalam isActive) TIDAK memicu re-render. Tanpa pola ini, highlight
+	// sidebar tidak pernah berubah saat navigasi.
+	function isActive(path: string, href: string, section?: string): boolean {
 		if (href === '/') return path === '/';
 		// Menu berkelompok tetap aktif di semua sub-halamannya (mis. /inventory/*, /reports/*)
 		const base = section ?? href;
@@ -110,12 +113,12 @@
 						href={item.href}
 						on:click={() => (sidebarOpen = false)}
 						class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
-						{isActive(item.href, item.section) ? 'bg-primary-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}"
-						aria-current={isActive(item.href, item.section) ? 'page' : undefined}
+						{isActive($page.url.pathname, item.href, item.section) ? 'bg-primary-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}"
+						aria-current={isActive($page.url.pathname, item.href, item.section) ? 'page' : undefined}
 					>
 						<svelte:component this={item.icon} class="w-5 h-5 shrink-0" />
 						<span>{item.label}</span>
-						{#if isActive(item.href, item.section)}
+						{#if isActive($page.url.pathname, item.href, item.section)}
 							<ChevronRight class="w-4 h-4 ml-auto" />
 						{/if}
 					</a>
@@ -129,8 +132,8 @@
 						href={item.href}
 						on:click={() => (sidebarOpen = false)}
 						class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
-						{isActive(item.href, item.section) ? 'bg-primary-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}"
-						aria-current={isActive(item.href, item.section) ? 'page' : undefined}
+						{isActive($page.url.pathname, item.href, item.section) ? 'bg-primary-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}"
+						aria-current={isActive($page.url.pathname, item.href, item.section) ? 'page' : undefined}
 					>
 						<svelte:component this={item.icon} class="w-5 h-5 shrink-0" />
 						<span>{item.label}</span>
