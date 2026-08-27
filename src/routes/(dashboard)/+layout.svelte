@@ -4,6 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { authStore } from '$lib/stores/auth';
+	import { canSeeNavItem, type Feature } from '$lib/utils/rbac';
 	import {
 		LayoutDashboard,
 		ShoppingCart,
@@ -33,23 +34,25 @@
 		icon: typeof LayoutDashboard;
 		/** Prefix URL agar item tetap aktif di semua sub-halamannya (mis. /inventory/*, /reports/*) */
 		section?: string;
+		/** Feature key for RBAC visibility check */
+		feature?: Feature;
 	}
 
 	const mainNav: NavItem[] = [
 		{ href: '/', label: 'Dashboard', icon: LayoutDashboard },
-		{ href: '/pos', label: 'Kasir (POS)', icon: ShoppingCart, section: '/pos' },
-		{ href: '/menu-items', label: 'Menu & Produk', icon: UtensilsCrossed },
-		{ href: '/categories', label: 'Kategori', icon: Tag },
-		{ href: '/tables', label: 'Meja', icon: LayoutGrid },
-		{ href: '/orders', label: 'Pesanan', icon: ClipboardList, section: '/orders' },
-		{ href: '/payments', label: 'Pembayaran', icon: CreditCard },
-		{ href: '/inventory/stocks', label: 'Inventaris', icon: Package, section: '/inventory' },
-		{ href: '/reports/sales-summary', label: 'Laporan', icon: BarChart3, section: '/reports' },
-		{ href: '/discounts', label: 'Diskon & Promo', icon: Tag },
+		{ href: '/pos', label: 'Kasir (POS)', icon: ShoppingCart, section: '/pos', feature: 'pos' },
+		{ href: '/menu-items', label: 'Menu & Produk', icon: UtensilsCrossed, feature: 'menu_items' },
+		{ href: '/categories', label: 'Kategori', icon: Tag, feature: 'categories' },
+		{ href: '/tables', label: 'Meja', icon: LayoutGrid, feature: 'tables' },
+		{ href: '/orders', label: 'Pesanan', icon: ClipboardList, section: '/orders', feature: 'orders' },
+		{ href: '/payments', label: 'Pembayaran', icon: CreditCard, feature: 'payments' },
+		{ href: '/inventory/stocks', label: 'Inventaris', icon: Package, section: '/inventory', feature: 'inventory' },
+		{ href: '/reports/sales-summary', label: 'Laporan', icon: BarChart3, section: '/reports', feature: 'reports' },
+		{ href: '/discounts', label: 'Diskon & Promo', icon: Tag, feature: 'discounts' }
 	];
 
 	const settingsNav: NavItem[] = [
-		{ href: '/users', label: 'Pengguna', icon: Users },
+		{ href: '/users', label: 'Pengguna', icon: Users, feature: 'users' },
 		{ href: '/settings/store', label: 'Outlet', icon: Store },
 		{ href: '/settings/tax', label: 'Pajak', icon: SlidersHorizontal }
 	];
@@ -109,35 +112,39 @@
 			<nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
 				<p class="px-3 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Menu Utama</p>
 				{#each mainNav as item}
-					<a
-						href={item.href}
-						on:click={() => (sidebarOpen = false)}
-						class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
-						{isActive($page.url.pathname, item.href, item.section) ? 'bg-primary-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}"
-						aria-current={isActive($page.url.pathname, item.href, item.section) ? 'page' : undefined}
-					>
-						<svelte:component this={item.icon} class="w-5 h-5 shrink-0" />
-						<span>{item.label}</span>
-						{#if isActive($page.url.pathname, item.href, item.section)}
-							<ChevronRight class="w-4 h-4 ml-auto" />
-						{/if}
-					</a>
+					{#if !item.feature || canSeeNavItem(item.feature)}
+						<a
+							href={item.href}
+							on:click={() => (sidebarOpen = false)}
+							class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
+							{isActive($page.url.pathname, item.href, item.section) ? 'bg-primary-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}"
+							aria-current={isActive($page.url.pathname, item.href, item.section) ? 'page' : undefined}
+						>
+							<svelte:component this={item.icon} class="w-5 h-5 shrink-0" />
+							<span>{item.label}</span>
+							{#if isActive($page.url.pathname, item.href, item.section)}
+								<ChevronRight class="w-4 h-4 ml-auto" />
+							{/if}
+						</a>
+					{/if}
 				{/each}
 
 				<div class="pt-4 pb-2">
 					<p class="px-3 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Pengaturan</p>
 				</div>
 				{#each settingsNav as item}
-					<a
-						href={item.href}
-						on:click={() => (sidebarOpen = false)}
-						class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
-						{isActive($page.url.pathname, item.href, item.section) ? 'bg-primary-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}"
-						aria-current={isActive($page.url.pathname, item.href, item.section) ? 'page' : undefined}
-					>
-						<svelte:component this={item.icon} class="w-5 h-5 shrink-0" />
-						<span>{item.label}</span>
-					</a>
+					{#if !item.feature || canSeeNavItem(item.feature)}
+						<a
+							href={item.href}
+							on:click={() => (sidebarOpen = false)}
+							class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
+							{isActive($page.url.pathname, item.href, item.section) ? 'bg-primary-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}"
+							aria-current={isActive($page.url.pathname, item.href, item.section) ? 'page' : undefined}
+						>
+							<svelte:component this={item.icon} class="w-5 h-5 shrink-0" />
+							<span>{item.label}</span>
+						</a>
+					{/if}
 				{/each}
 			</nav>
 
