@@ -20,7 +20,14 @@
 	$: isEdit = !!table;
 	$: mode = isEdit ? 'edit' : 'create';
 
-	$: if (open) {
+	// Guard: form hanya diisi ulang saat modal baru dibuka (transisi open: false → true).
+	// JANGAN pakai `$: if (open) { ... }` yang men-assign variabel form di dalamnya —
+	// di Svelte, variabel yang di-assign di dalam reactive block ikut terdaftar sebagai
+	// dependency, sehingga setiap kali nilai field berubah (mis. ganti status), blok
+	// dijalankan ulang dan mengembalikan field ke nilai awal.
+	let wasOpen = false;
+
+	function hydrateForm(): void {
 		if (table) {
 			table_number = String(table.table_number);
 			name = table.name ?? '';
@@ -34,6 +41,13 @@
 		}
 		errors = {};
 		submitting = false;
+	}
+
+	$: {
+		if (open && !wasOpen) {
+			hydrateForm();
+		}
+		wasOpen = open;
 	}
 
 	function handleClose(): void {

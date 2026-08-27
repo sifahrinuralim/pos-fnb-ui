@@ -22,7 +22,10 @@
 		await menuItemsStore.loadMenuItems();
 	});
 
-	$: if (open) {
+	// Form hanya diisi ulang saat modal baru dibuka (lihat penjelasan di TableForm).
+	let wasOpen = false;
+
+	function hydrateForm(): void {
 		if (discount) {
 			formData = {
 				name: discount.name, code: discount.code, discount_type: discount.discount_type,
@@ -40,6 +43,13 @@
 				start_date: '', end_date: '', usage_limit: null, is_active: true, targets: []
 			};
 		}
+	}
+
+	$: {
+		if (open && !wasOpen) {
+			hydrateForm();
+		}
+		wasOpen = open;
 	}
 
 	function addTarget() {

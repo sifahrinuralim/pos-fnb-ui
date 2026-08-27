@@ -36,7 +36,11 @@
 
 	$: isEdit = !!user;
 	$: mode = isEdit ? 'edit' : 'create';
-	$: if (open) {
+
+	// Form hanya diisi ulang saat modal baru dibuka (lihat penjelasan di TableForm).
+	let wasOpen = false;
+
+	function hydrateForm(): void {
 		if (user) {
 			name = user.name;
 			email = user.email;
@@ -52,6 +56,13 @@
 		}
 		errors = {};
 		submitting = false;
+	}
+
+	$: {
+		if (open && !wasOpen) {
+			hydrateForm();
+		}
+		wasOpen = open;
 	}
 
 	function fieldError(f: string): boolean { return !!errors[f]; }

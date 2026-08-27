@@ -44,7 +44,10 @@
 	$: isEdit = !!menuItem;
 	$: mode = isEdit ? 'edit' : 'create';
 
-	$: if (open) {
+	// Form hanya diisi ulang saat modal baru dibuka (lihat penjelasan di TableForm).
+	let wasOpen = false;
+
+	function hydrateForm(): void {
 		if (menuItem) {
 			category_id = menuItem.category_id;
 			name = menuItem.name;
@@ -67,6 +70,13 @@
 		errors = {};
 		submitting = false;
 		loadCategories();
+	}
+
+	$: {
+		if (open && !wasOpen) {
+			hydrateForm();
+		}
+		wasOpen = open;
 	}
 
 	async function loadCategories(): Promise<void> {

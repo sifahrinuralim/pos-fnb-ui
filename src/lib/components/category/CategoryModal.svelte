@@ -19,7 +19,10 @@
 	$: isEdit = !!category;
 	$: mode = isEdit ? 'edit' : 'create';
 
-	$: if (open) {
+	// Form hanya diisi ulang saat modal baru dibuka (lihat penjelasan di TableForm).
+	let wasOpen = false;
+
+	function hydrateForm(): void {
 		if (category) {
 			name = category.name;
 			description = category.description ?? '';
@@ -31,6 +34,13 @@
 		}
 		errors = {};
 		submitting = false;
+	}
+
+	$: {
+		if (open && !wasOpen) {
+			hydrateForm();
+		}
+		wasOpen = open;
 	}
 
 	function handleClose(): void {
