@@ -18,7 +18,7 @@
 	import { listCategories, type CategoryResponse } from '$lib/api/categories.api';
 	import { listMenuItems, type MenuItemResponse } from '$lib/api/menu-items.api';
 	import { listTables, type Table } from '$lib/api/tables';
-	import { getActiveTaxConfig, type TaxConfig } from '$lib/api/settings';
+	import { getActiveTaxConfig } from '$lib/api/settings';
 
 	interface CartLine {
 		id: string;
@@ -38,6 +38,14 @@
 	let categories: CategoryResponse[] = [];
 	let menuItems: MenuItemResponse[] = [];
 	let tables: Table[] = [];
+	interface TaxConfig {
+		id: number;
+		name: string;
+		service_charge_rate: number;
+		ppn_rate: number;
+		is_active: boolean;
+	}
+
 	let taxConfig: TaxConfig | null = null;
 	let selectedCategory = '';
 	let searchTerm = '';
@@ -110,8 +118,9 @@
 
 	// ── Kalkulasi ──
 	$: subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
-	$: taxAmount = taxConfig ? subtotal * (taxConfig.rate / 100) : 0;
-	$: total = subtotal + taxAmount;
+	$: serviceChargeAmount = taxConfig ? subtotal * (taxConfig.service_charge_rate / 100) : 0;
+	$: ppnAmount = taxConfig ? (subtotal + serviceChargeAmount) * (taxConfig.ppn_rate / 100) : 0;
+	$: total = subtotal + serviceChargeAmount + ppnAmount;
 	$: cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
 
 	function formatCurrency(value: number): string {
@@ -369,8 +378,12 @@
 						<span class="font-medium text-gray-900">{formatCurrency(subtotal)}</span>
 					</div>
 					<div class="flex items-center justify-between text-sm text-gray-600">
-						<span>Pajak {taxConfig ? `(${taxConfig.rate}%)` : ''}</span>
-						<span class="font-medium text-gray-900">{formatCurrency(taxAmount)}</span>
+						<span>Service Charge {taxConfig ? `(${taxConfig.service_charge_rate}%)` : ''}</span>
+						<span class="font-medium text-gray-900">{formatCurrency(serviceChargeAmount)}</span>
+					</div>
+					<div class="flex items-center justify-between text-sm text-gray-600">
+						<span>PPN {taxConfig ? `(${taxConfig.ppn_rate}%)` : ''}</span>
+						<span class="font-medium text-gray-900">{formatCurrency(ppnAmount)}</span>
 					</div>
 					<div class="flex items-center justify-between border-t border-gray-100 pt-3">
 						<span class="text-base font-bold text-gray-900">Total</span>
